@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Cleanly kill supervisor when container is stopped
+trap 'kill $(jobs -p)' EXIT
+
 # start services
 supervisord
 
