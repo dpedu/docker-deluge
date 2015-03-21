@@ -19,11 +19,13 @@ RUN apt-get update ; \
     chmod +x /run_deluge.sh
 
 # Install SSH server
-RUN mkdir /var/run/sshd ; \
-    apt-get -y install openssh-server
+#RUN mkdir /var/run/sshd ; \
+#    apt-get -y install openssh-server
 
 # Install supervisor, vnstat, & start script
-RUN apt-get -y install supervisor vnstat
+RUN apt-get -y install supervisor vnstat ; mkdir /start.d
+COPY deluged.conf /etc/supervisor/conf.d/deluged.conf 
+COPY vnstatd.conf etc/supervisor/conf.d/vnstatd.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start /start
 RUN chmod +x /start ; \
