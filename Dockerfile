@@ -18,10 +18,6 @@ RUN apt-get update ; \
     chgrp -R deluge /home/deluge/.config ; \
     chmod +x /run_deluge.sh
 
-# Install SSH server
-#RUN mkdir /var/run/sshd ; \
-#    apt-get -y install openssh-server
-
 # Install supervisor, vnstat, & start script
 RUN apt-get -y install supervisor vnstat ; mkdir /start.d
 COPY deluged.conf /etc/supervisor/conf.d/deluged.conf 
@@ -35,11 +31,10 @@ RUN chmod +x /start ; \
     sed -i -e"s/^RateUnit\s1/RateUnit 0/" /etc/vnstat.conf
 
 
-# Expose ssh, deluge, peer, deluge-web
-EXPOSE 22
+# Expose deluge-web, deluge
 EXPOSE 8112
-#EXPOSE 8113
 EXPOSE 58846
+#EXPOSE 8113 # deluge-web https
 
 # REMEMBER TO MANUALLY SPECIFY A PEER PORT ON RUN
 
